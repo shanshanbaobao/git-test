@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>less的应用</title>
+    <script>
+    new function (){
+   var _self = this;
+   _self.width = 640;
+   _self.fontSize = 100;
+   _self.widthProportion = function(){
+       var p = (document.body&&document.body.clientWidth||document.getElementsByTagName("html")[0].offsetWidth)/_self.width;
+       return p>1?1:p<0.5?0.5:p;
+    };
+   _self.changePage = function(){
+       document.getElementsByTagName("html")[0].setAttribute("style","font-size:"+_self.widthProportion()*_self.fontSize+"px !important");
+   }
+   _self.changePage();
+   window.addEventListener('resize',function(){_self.changePage();},false);
+};
+
+</script>
+</head>
+<body>
+
+
+<style>
+    .box1{font-size: 0.5rem;}
+
+</style>
+<div id="container">
+    <div class="box1">
+        我是一个长600px；高30px的灰色盒子,字体大小为24px；..
+    </div>
+    <div class="box2">
+        <h2>我是一个标题字体大小为40px；</h2>
+        <ul>
+            <li>我是一个子元素是一个宽高为400px的红色盒子</li>
+            <li>我是一个子元素是一个宽高为600px的黄色色盒子</li>
+        </ul>
+    </div>
+</div>
+
+
+</body>
+
+
+
+
+</html>

@@ -1,0 +1,33 @@
+.line{height: 30px; background: #ccc; width: 500px; margin: 100px auto; position: relative;}
+.line span{background: #3c763d; color: #fff; font-size: 16px; width: 30px; line-height: 30px; height: 30px; text-align: center;
+border-radius: 50%; display: block; position: absolute; top: 0; left: 0; cursor: pointer; font-family: SimSun;}
+
+*{padding: 0; margin: 0; list-style: none;}
+body{background: #eee;}
+
+.scroll{border: 1px solid #3c763d; width: 340px; background: #fff; margin: 30px auto;}
+.scroll ul{display: flex; background: #1364b6; color: #fff;}
+.scroll ul li{font-size: 20px; border-right: 1px solid #fff; width: 25%; box-sizing: border-box; text-align: center;
+cursor: pointer;}
+.scroll ul li.active{background: #ffffff; border-top: 3px solid #4cae4c; color: #4cae4c}
+.scroll ul li:last-child{border-right: none;}
+
+.scroll-wrap{position: relative; height: 300px; overflow: hidden;}
+.scroll-wrap .scroll-cont{padding: 0 20px;}
+.scroll-wrap .scroll-bar{width: 10px; height: 100%; background: #f0f0f0; position: absolute; right: 0; top: 0;}
+.scroll-wrap .scroll-slide{position: absolute; left: 1px; top: 0; background: #4cae4c; width: 100%; height: 30px;}
+
+.tab{margin: 0 auto; width: 300px; height: 130px;}
+.tab ul{display: flex;}
+.tab ul li{width: 25%; cursor: pointer; background: #1364b6; color: #fff; text-align: center;
+border-right: 1px solid #fff; }
+.tab ul li.active{background: #f00;}
+.tab ol li{width: 300px; height: 100px; line-height: 100px; text-align: center; font-size: 40px;
+    border: 1px solid #4cae4c; display: none; position: relative;}
+.tab ol li b{width: 100%; height: 100%;display: block;
+    background: rgba(255, 255, 255, 0.6);
+    position: absolute;
+    top: 1px;
+    transition: all .3s;}
+
+

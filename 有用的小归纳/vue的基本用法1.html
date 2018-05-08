@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/vue.js"></script>
+
+</head>
+<body>
+<div id="tt">
+    <form >
+        <label for="name">name</label>
+        <input class="form-control" type="text" v-model="name" value="4111">
+        <label for="password">password</label>
+        <input class="form-control" type="text" v-model="password">
+
+    </form>
+
+    <button class="btn btn-primary" v-on:click="ddd">add</button>
+
+    <ul >
+        <li v-for="(gg,index) in num">{{gg.y}}</li>
+    </ul>
+
+    <table class="table table-bordered table-hover text-center">
+        <caption class="h3 text-center">example</caption>
+        <tr>
+            <th class="text-center">id</th>
+            <th class="text-center">name</th>
+            <th class="text-center">password</th>
+            <th class="text-center">operate</th>
+        </tr>
+        <tr v-for="(lu,index) in hezi">
+            <td>{{index+1}}</td>
+            <td>{{lu.name}}</td>
+            <td>{{lu.password}}</td>
+            <td><button class="btn bg-info" v-on:click="nowIndex=index" data-toggle="modal" data-target="#mo">delete</button></td>
+        </tr>
+    </table>
+<p>{{nowIndex}}</p>
+
+    <div class="modal" id="mo" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title">Are you sure to delete this?</h1>
+                </div>
+                <div class="modal-body text-right">
+                    <button class="btn btn-primary" data-dismiss="modal">cancel</button>
+                    <button class="btn btn-danger" v-on:click="del(nowIndex)" data-dismiss="modal">ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<script>
+    new Vue({
+        el:'#tt',
+        data:{
+            name:"",
+            password:"",
+            num:[],
+            hezi:[],
+            nowIndex:-100
+        },
+        methods:{
+            ddd:function(){
+                console.log(this)  //这里的this就是new Vue
+                this.hezi.push({
+                    name:this.name,
+                    password:this.password
+                })
+            },
+            del:function(a){
+                alert(a)
+                this.hezi.splice(a,1)
+            }
+        }
+    })
+</script>
+</body>
+</html>

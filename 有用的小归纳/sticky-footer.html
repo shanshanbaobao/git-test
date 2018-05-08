@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>kong</title>
+    <link rel="stylesheet" href="css/css.css">
+</head>
+<body>
+
+<style>
+    *{margin: 0; padding: 0;}
+    .content1{display: flex;
+        flex-flow: column;
+        min-height: 100vh;}
+    .demo{ flex: 1;}
+    .con{width: 800px; line-height: 30px; text-align: center; margin: 0 auto; background: #333;
+    color: #fff; flex: 0; height: 30px; overflow: hidden;}
+</style>
+
+
+<!--方法一适合移动端-->
+<div class="content1">
+    <div class="demo">
+
+    </div>
+    <div class="con">1111</div>
+</div>
+
+<!--方法二兼容性强，适合pc端；-->
+
+<div content="content2">
+<div class="wrapper">
+    <div class="con2"></div>
+</div>　
+　　<div class="footer">2222</div>
+</div>
+
+<style>
+    html, .content2, .wrapper {
+        height: 100%;
+    }
+    .content2 .wrapper {
+        height: auto; min-height: 100%;
+    }
+    .con2 {
+        padding-bottom: 150px; /* 必须使用和footer相同的高度 */
+    }
+    .footer {
+        position: relative;
+        margin: 0 auto;
+        margin-top: -150px; /* footer高度的负值 */
+        height: 150px;
+        clear:both;
+        width: 800px; line-height: 30px; text-align: center;
+        background: #333333;
+    }
+</style>
+
+</body>
+
+
+
+</html>

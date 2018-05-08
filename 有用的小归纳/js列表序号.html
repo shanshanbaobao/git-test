@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<style>
+    .box ul li{background: lightyellow; margin-bottom: 5px;}
+</style>
+<div class="box">
+    <ul>
+        <li><span></span></li>
+        <li><span></span></li>
+        <li><span></span></li>
+        <li><span></span></li>
+        <li><span></span></li>
+        <li><span></span></li>
+        <li><span></span></li>
+        <li><span></span></li>
+    </ul>
+</div>
+<script>
+    //jq 方法
+    //    $(function () {
+    //        for(var i=0; i< $('.box ul li').length; i++){
+    //                $('.box ul li span').eq(i).html($('.box ul li').eq(i).index());
+    //        }
+    //    })
+
+    //js 方法
+
+    var oBox=document.querySelector('.box');
+    var ali=oBox.getElementsByTagName('li');
+
+    for(var w=0; w<ali.length; w++){
+        ali[w].index=w;
+        var oSpan=ali[w].getElementsByTagName('span')[0];
+        oSpan.innerHTML=ali[w].index+1;
+    }
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>

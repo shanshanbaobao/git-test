@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/css.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+
+</head>
+<body>
+
+<!--这是改进的方法-->
+<script>
+    (function (win,doc) {
+        var oFontSize=100;  //设置fontSize大小
+        var oWidth=640;    //设置设计稿的宽度
+        var oHtml=doc.getElementsByTagName('html')[0];
+        var oChangeSize=function () {
+            var oSize=oHtml.offsetWidth/oWidth;
+            return oSize>1?1:oSize<0.5?0.5:oSize;
+        };
+        var oLastSize=function () {
+            oHtml.style.fontSize=oChangeSize()*oFontSize+'px';
+        };
+        oLastSize();
+        win.addEventListener('resize',function () {oLastSize()},false)
+    })(window,document)
+</script>
+<div class="test" style="font-size: 1rem;">
+    sfsfsf
+</div>
+
+</body>
+</html>

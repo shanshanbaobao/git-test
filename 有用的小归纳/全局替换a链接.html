@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://wapshsx.skiinjc.org//js/jquery.js"></script>
+
+
+</head>
+<body>
+<div class="box">
+    <ul>
+        <li><a href="http://6g.skinjc.coma1">aaa</a></li>
+        <li><a href="http://6g.skinjc.coma2">bbb</a></li>
+        <li><a href="http://6g.skinjc.coma3">ccc</a></li>
+    </ul>
+</div>
+<script>
+    function huan_a() {
+        var oA=$('.box a');
+        oA.each(function (i) {
+            var res=/^(http:\/\/6g.skinjc.com)|[a]/g;
+            console.log(oA.eq(i).attr('href'));
+            var dd= oA.eq(i).attr('href').replace(res,'666');
+            oA.eq(i).attr('href',dd);
+            // console.log($('.box a').attr('href').replace(res,'b'));
+        })
+    }
+
+    function one() {
+        var oA=$('.box a');
+        oA.each(function (i) {
+            // console.log(oA.eq(i).html());
+            if(oA.eq(i).html()=='aaa'){
+                $(this).attr('href','0000')
+            };
+        });
+
+    }
+
+    one();
+</script>
+</body>
+</html>

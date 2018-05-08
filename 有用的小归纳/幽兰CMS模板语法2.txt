@@ -1,0 +1,350 @@
+<!-- 幽兰CMS 模板系统使用手册@2013-6-1 -->
+此文档请直接用源码方式查看，不要用浏览器打开。
+
+<!-- 标准的seo数据 -->
+<title>{html[title]}</title>
+<meta name="keywords" content="{html[keywords]}">
+<meta name="description" content="{html[description]}">
+
+<!-- 子模板(注意路径都是相对网站跟目录) -->
+{template template/block/header.html}
+{template template/block/footer.html}
+{template template/block/right.html}
+
+<!-- 文章循环常用标签 -->
+{v[url]}
+{v[tips]}
+{v[title]}
+{v[picture]}
+{v[intro]}
+
+<!-- 栏目附加图的调用方法  im 为变量名 -->
+{func im class_img 栏目=$html[class_id];尺寸=280x240;}
+{func im class_img 栏目=77;尺寸=246x90;}
+<img src="{im}">
+
+<!-- 页面标记，用于页面含有js的处理之用 -->
+<script type="text/javascript">
+var page = "page";
+var class_top = parseInt("{html[class_top]}");
+var class_id = parseInt("{html[class_id]}");
+var cms_id = parseInt("{html[cms_id]}");
+</script>
+
+
+// 所有支持的cms查询参数:
+// 解释： => 之后是所有支持的调用命令，可英文，可中文，最后一个是默认值，如果未调用，就使用此默认值
+
+	class_id => class_id, 栏目, 栏目ID, 0
+	class_name => class_name, 栏目名称, ''
+	title_len => title_len, 标题长度, 0
+	title_min_len => title_min_len, 标题最小长度, 0
+	intro_len => intro_len, 描述长度, 简介长度, 0
+	recommend => recommend, 推荐, 0
+	command => command, 推荐度, 0
+	command_morethan => command_morethan, 推荐度大于, 0
+	command_lessthan => command_lessthan, 推荐度小于, 0
+	key => key, keyword, 关键词, ''
+	search_field => search_field, 搜索字段, 'title,keyword,tags'
+	full_search => full_search, 全文搜索, 0
+	with_pic => with_pic, 有图, 0
+	pic_size => pic_size, 图片尺寸, ''
+	audit => audit, 审核, 1
+	sort => sort, 排序, 'command desc,cms_date desc'
+	time_format => time_format, 时间格式, "Y-m-d"
+	offset => offset, 开始, 0
+	num => num, 数量, 0
+	where => where, 附加条件, ''
+	sql => sql
+
+
+
+<!-- 单独取一条 -->
+{cms_one 栏目=1;标题长度=20;推荐度=200;简介长度=40}
+<div><a href="{v[url]}">{v[title]}</a></div> <div>{v[intro]}</div>
+
+<!-- 循环取多条 -->
+{cms 栏目=1;标题长度=20;排序=cms_date desc;}
+	<li><a href="{v[url]}" title="{v[tips]}" target="_blank">{v[title]}</a></li>
+{/cms}
+
+<!-- 循环子栏目 -->
+{child 栏目=20;}  <!-- 输出的变量为 $c 数组 -->
+<ul class="sss">
+	{cms class_id=$c[id];数量=$c[rows];} <!-- 输出的为 $v 数组 -->
+	<li><a href="{v[url]}" title="{v[tips]}" target="_blank">{v[title]}</a></li>
+	{/cms}
+</ul>
+{/child}
+
+<!-- 栏目页分页示例 -->
+{cms 栏目=$html[class_id];开始=$html[offset];数量=$html[pagesize];标题长度=40;简介长度=120;日期格式=Y-m-d}
+	<div class="we_title"><a href="{v[url]}" target="_blank">{v[title]}</a></div>
+	<div class="we_date">{v[time]}</div>
+	<div class="we_des">{v[description]}…<a href="{v[url]}" target="_blank">详细>></a></div>
+{/cms}
+
+<!--循环顶级栏目，获取下级栏目和该顶级栏目下的所有文章-->
+<?php
+$class_arr = array(1,10,17,24,32);
+foreach ($class_arr as $c_id) {
+?>
+    {child 栏目=$c_id}
+    	{c[path]}
+        {c[class_name]}
+    {/chlid}
+    {cms 栏目=$c_id;标题长度=20;简介长度=60;数量=3;有图=1;排序=command desc}
+    	{v[picture]}
+        {v[class_name]}
+        {v[path]}
+        {v[url]}
+        {v[title]}
+        {v[intro]}
+    {/cms}
+<?php } ?>
+
+<!--获取文章多个尺寸的图片【附加图片】-->
+{cms 栏目=193;开始=$html[offset];数量=$html[pagesize];排序=command desc;}
+	<?php echo $v['pics']['184*184']; ?>
+    <?php echo $v['pics']['152*106']; ?>
+    <?php echo $v['pics']['27*19']; ?>
+{/cms}
+
+<!-- ********************************************************
+// 以下为各模板可用变量的详细说明
+******************************************************** -->
+
+<!-- 所有页面的环境变量都有(首页除此以外没有别的了) -->
+{html[title]}
+{html[keywords]}
+{html[description]}
+
+<!-- ********************************************************
+// 1. 栏目页 class.html
+******************************************************** -->
+环境变量:
+{html[class_name]}
+{html[description]}        如果需要截取长度用 <?php echo cutstr($html["description"], 40, "…"); ?>
+
+{html[class_id]}
+{html[class_top]}   父栏目ID，注意不是栏目名
+
+{html[class][xxxx]}  保留了class表所有字段，均可引用(包括附加字段)
+
+
+// 调用栏目图片（只能按尺寸调用）:
+{func im class_img 栏目=$html[class_id];尺寸=280x240;}
+{im}
+
+{child 栏目=$html[class_id]}
+	{c[path]}
+	{c[class_name]}
+	{c[description]}
+
+	// 在子栏目循环中调用文章列表:
+	{cms 栏目=$c[id];数量=8;标题长度=20}
+		<li>·<a href="{v[url]}">{v[title]}</a></li>
+	{/cms}
+
+	{func im class_img 栏目=$c[id];尺寸=90x90;}
+	{im}
+
+{/child}
+
+<!-- ********************************************************
+// 2. 列表页 list.html
+******************************************************** -->
+环境变量:
+{html[class_id]}
+{html[class_name]}
+{html[class_top]}
+{html[page_navi]}
+{html[page_link]}
+
+{html[count]}    下面这几个参数可以用于分页处理，用以代替{html[page_link]}，如有必要的话
+{html[pagecount]}
+{html[pagesize]}
+{html[page]}
+{html[offset]}
+
+{html[class][xxx]}  二维数组中保留了class表中的所有列，均可引用(包括附加字段)
+
+
+{cms 栏目=$html[class_id];开始=$html[offset];数量=$html[pagesize];标题长度=38;简介长度=150;日期格式=Y-m-d H:i;}
+	{v[url]}
+	{v[title]}
+	{v[time]}
+	{v[tags]}
+	{v[tags_link]}
+	{v[intro]}
+	{v[自定义字段]}
+	{v[头衔]}
+{/cms}
+
+
+
+<!-- ********************************************************
+// 3. 文章页 page.html
+******************************************************** -->
+{html[article][title]}
+{html[article][s_write]}
+{html[article][s_from]}
+{html[article][time]}
+{html[article][content]}     这里是文章分页之后的内容，原始内容是s_con
+{html[article][keyword]}
+{html[article][keyword_link]}
+{html[article][tags]}
+{html[article][tags_link]}
+
+{html[article][xxx]} 包含了cms表中的所有列，均可引用(包括自定义字段)
+
+可以使用附加字段，格式:
+{html[article][头衔]}
+{html[article][专家描述]}
+
+<a href="{html[path]}" target="_blank">返回{html[class_name]}频道</a>
+
+环境变量:
+{html[page_navi]}
+{html[class_id]}
+{html[class_name]}
+{html[class]}  =  class_id
+{html[path]}
+{html[class_top]}
+{html[parent_path]}
+{html[page_link]}
+
+{html[count]}    下面这几个参数可以用于分页处理，用以代替{html[page_link]}，如有必要的话
+{html[pagecount]}
+{html[pagesize]}
+{html[page]}
+{html[offset]}
+
+上一篇：{html[pre_article]}
+下一篇：{html[next_article]}
+
+相关文章
+{cms 栏目=$html[class_id];数量=6;}
+
+推荐文章
+{cms 排序=command desc,id desc;数量=6;}
+
+按关键词调用相关文章
+<?php $key = $html["article"]["keyword"]; ?>
+{cms 关键词=$key;数量=6;标题长度=60;}
+
+{cms 数量=9;标题长度=30;附加条件=command<=50;}
+
+
+
+// 利用栏目附加字段：
+$field = array_keys(unserialize($html["class"]["more"]));
+foreach ($field as $f_name) {
+	$str = $html["class"][$f_name];
+	if ($str != '') {
+		echo $f_name."<br>";
+		echo $str."<br>";
+	} else {
+		// 否则就是隐藏的
+	}
+}
+
+
+// 按关键字调用治疗某些疾病的专家：
+{cms 关键词=$html[class_name];栏目=10;数量=10;标题长度=60;}
+	<a href="{v[url]}">{v[title]}</a><br>
+{/cms}
+
+
+
+
+可用的PHP系统函数 (在function.php中)
+function text_show($string)       <!-- 空格转成&nbsp; \n 回车转为 <br> -->
+function cutstr($string, $length=20, $etc='...')       <!-- 裁切字符串，中文不会乱码gbk|gb2312模式 -->
+function format_text($string)        <!-- 去除文本中的代码标签 -->
+function json($array)          <!-- 将PHP数组转为json格式用于html输出给js用，需要class.fastjson.php类库请确认include下有此文件 -->
+function get_ip()         <!-- 获取ip，注意，是操作者的ip，页面是最终生成静态页给用户浏览 -->
+
+模板系统已知问题:
+1. cms调用不支持二维数组
+	{cms 关键词=$html[article][keyword];}
+	将不能工作，需改为以下形式:
+	<?php $key = $html[article][keyword]; ?>
+	{cms 关键词=$key;}
+
+
+<!-- 完 -->
+
+<!-- 以下都是不常用的部分，一般来说不推荐使用 -->
+
+<!-- 带有ul的li -->
+<?php $xy = 0; ?>
+{cms 栏目=$html[class_id];数量=$html[pagesize];标题长度=28;简介长度=54;开始=$html[offset];日期格式=Y-m-d}
+<?php $xy++; ?>
+<?php if ($xy % 5 == 1) { ?>
+			<ul class="listone">
+<?php } ?>
+				<li><a href="{v[url]}">{v[title]}</a>{v[time]}</li>
+<?php if ($xy % 5 == 0) { ?>
+			</ul>
+<?php } ?>
+{/cms}
+<?php if ($xy % 5 != 0) { ?>
+			</ul>
+<?php } ?>
+
+
+<!-- path命令，按栏目ID或者名称获取栏目路径 -->
+{path 栏目=54}
+{path 栏目名称=特色疗法}
+{path 栏目名称=腰椎病|特色疗法}
+
+
+
+<!-- 友情链接 -->
+<!-- 分组=xxx|xxx;类型=图片、文字;首页=是、否; -->
+<!-- 多个分组名称可以使用竖线|隔开 -->
+{func flink friend_link 类型=图片;首页=是}
+{if flink}
+<div style="width:940px; margin:10px auto;">
+{loop flink k v}
+<a href="{v[url]}" title="{v[intro]}" target="_blank"><img src="{v[logo]}" alt="{v[title]}" width="88" height="31" border="1"></a>
+{/loop}
+</div>
+{/if}
+
+<!-- 文字友情链接 -->
+{func flink friend_link 类型=文字;首页=是}
+{if flink}
+<div style="width:940px; margin:10px auto;">
+{loop flink k v}
+<a href="{v[url]}" title="{v[intro]}" target="_blank">{v[title]}</a>
+{/loop}
+</div>
+{/if}
+
+
+<!-- ask调用 -->
+{ask class_id=10;关键词=$html[关键词]}
+	<li><a href="{a[url]}" target="_blank" title="{a[tips]}">{a[title]}</a></li>
+{/ask}
+
+
+<!-- 测试中的功能 -->
+{child 搜索=案例;数量=10;}
+
+{/child}
+
+
+<!-- 直接使用sql取文章：尽量少用此方法 -->
+{cms sql=select * from db_cms where audit=1 and class_id=1 and command=1 order by cms_date desc,id desc limit 1,8}
+	<li><a href="{v[url]}" target="_blank" title="{v[tips]}">{v[title]}</a></li>
+{/cms}
+
+
+<!-- 单个子栏目：用的少 -->
+{child_one 栏目=1;}
+<div><a href="{c[path]}">{c[class_name]}</a></div> <div>{c[intro]}</div>
+
+<a href="javascript:void(0)" onclick="openZoosUrl();return false;" target="_blank">
+

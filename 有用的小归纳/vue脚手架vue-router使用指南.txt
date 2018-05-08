@@ -1,0 +1,82 @@
+vue脚手架vue-router使用指南
+
+这是原来的路由配置
+import Vue from 'vue';
+
+import Router from 'vue-router';
+
+import Hello from 'components/Hello';
+
+
+
+Vue.use(Router);
+
+
+
+export default new Router({
+  
+routes: [
+    
+  {
+      path: '/',
+  
+         components: {
+       
+         default: Hello
+     
+       }
+   
+   }
+  
+  ]
+
+});
+
+
+可以看出path: '/'就是根目录下的组件，默认是Hello，如果我们想在页面中再引入一个组件，就可以直接在这个path目录下写，比如我们再加个header组件
+
+import Vue from 'vue';
+
+import Router from 'vue-router';
+
+import Hello from 'components/Hello';
+
+// 导入组件
+
+import Header from 'components/header/header';
+
+
+
+Vue.use(Router);
+
+
+
+export default new Router({
+  
+routes: [
+   
+   {
+     
+    path: '/',
+     
+    components: {
+    
+        default: Hello,
+     
+       // 注册组件，命名为Header
+      
+       Header: Header
+     
+      }
+   
+     }
+  
+   ]
+
+});
+
+
+
+然后在App.vue文件内写入就好了。
+不同的组件以name区分，所以要记得带上name,默认的就可以省略。
+<router-view name="Header"></router-view>

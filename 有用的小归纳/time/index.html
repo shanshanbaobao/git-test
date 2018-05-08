@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        *{margin: 0; padding: 0; list-style: none;}
+        .time ul li{float: left; line-height: 94px; font-size: 30px; margin-right: 5px;}
+    </style>
+    <script>
+        window.onload=function(){
+            var oTime=document.querySelector('.time');
+            var aLi=oTime.getElementsByTagName('img');
+
+
+
+
+
+           // alert(str[5])
+            function bl(n){
+                if(n<10){
+                    return '0'+n;
+                }
+                else {return ''+n;}
+            }
+            function time(){
+                var oS=new Date();
+                var h=oS.getHours();
+                var m=oS.getMinutes();
+                var s=oS.getSeconds();
+                var str=bl(h)+bl(m)+bl(s);
+                for (i=0; i<aLi.length; i++){
+                    aLi[i].src='images/'+str[i]+'_03.jpg'}
+            }
+
+            setInterval(time,1000);
+            time();
+
+//            var oD=new Date();
+//            var gg=['星期天','星期一','星期二','星期三','星期四','星期五','星期六']
+//            alert(gg[oD.getDay()])
+
+
+        }
+    </script>
+</head>
+<body>
+<div class="time">
+    <ul>
+        <li><img src="images/0_03.jpg" alt=""></li>
+        <li><img src="images/0_03.jpg" alt=""></li>
+        <li>: </li>
+        <li><img src="images/0_03.jpg" alt=""></li>
+        <li><img src="images/0_03.jpg" alt=""></li>
+        <li>: </li>
+        <li><img src="images/0_03.jpg" alt=""></li>
+        <li><img src="images/0_03.jpg" alt=""></li>
+
+    </ul>
+</div>
+</body>
+</html>
+

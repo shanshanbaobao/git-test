@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>Document</title>
+
+
+
+</head>
+<body>
+<button id="btn">444</button>
+<div id="con">font-size</div>
+
+
+<script>
+
+//这个unit是一个localStorage的封装函数
+    var unit=(function(){
+        var storageSet=function(ket,val){
+            return  localStorage.setItem(ket,val)
+        }
+        var storageGet=function(ket){
+            return  localStorage.getItem(ket)
+        }
+        return{
+            storageSet:storageSet,
+            storageGet:storageGet
+        }
+    })();
+    // 上一次存储的值 没有就默认20
+    var num= unit.storageGet('size') || 20;
+
+
+    document.getElementById('btn').onclick = function(){
+        ++num;
+        unit.storageSet('size',num);
+        document.getElementById("con").style.fontSize = unit.storageGet('size') + 'px';
+        document.getElementById('con').innerHTML = unit.storageGet('size') + 'px';
+    }
+document.getElementById("con").style.fontSize = unit.storageGet('size') + 'px';
+
+</script>
+</body>
+</html>

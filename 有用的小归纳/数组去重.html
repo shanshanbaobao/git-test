@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>group</title>
+    <style>
+        body{padding:20px;margin:0;}
+        h2{color:#dd4215;padding:0;margin:0;font-size:20px;}
+        hr{margin-top:40px;}
+        hr:nth-of-type(1){margin-top:0;display:none;}
+    </style>
+</head>
+<body>
+<script>
+    function group (data, key) {
+        var obj = {}, arr = [];
+        for(var a = 0; a < data.length; a++){
+            if (!obj[data[a][key]]) {
+                obj[data[a][key]] = [data[a]];
+                arr.push(data[a]);
+            } else {
+                obj[data[a][key]].push(data[a]);
+            }
+        }
+        return {
+            unique: arr,
+            group: obj
+        }
+    }
+
+    //下面是测试
+    var data = [
+        {name: '小明', flag: '5555555656'},
+        {name: '张三', flag: '我是大张三'},
+        {name: '李四', flag: '我是大李四'},
+        {name: '王五', flag: '我是大王五'},
+        {name: '赵六', flag: '我是大赵六'},
+        {name: '张三', flag: '张三二号'},
+        {name: '张三', flag: '张三三号'},
+        {name: '赵六', flag: '啊时代发生地方'},
+        {name: '刘八', flag: '暗示'},
+        {name: '小明', flag: '2425435'}
+    ];
+    var test = group(data, 'name');
+    //输出原数据
+    document.body.innerHTML += '<hr><h2>这是原数据</h2>';
+    for(var a in data){
+        document.body.innerHTML +='<div> name: '+ data[a].name + ' ----- flag: ' +  data[a].flag+'</div>';
+    }
+
+    //输出去重后的数据
+    document.body.innerHTML += '<hr><h2>这是去重后数据</h2>';
+    for(var a in test.unique){
+        document.body.innerHTML +='<div> name: '+ test.unique[a].name + ' ----- flag: ' +  test.unique[a].flag+'</div>';
+    }
+
+    //输出分组数据
+    document.body.innerHTML += '<hr><h2 style="margin-top:30px;">这是分组数据</h2>';
+    for(var a in test.group){
+        document.body.innerHTML += '<hr style="width:400px;float:left;margin:0;opacity:0;"><br>';
+        for(var b in test.group[a]){
+            document.body.innerHTML +='<div> name: '+ test.group[a][b].name + ' ----- flag: ' +  test.group[a][b].flag+'</div>';
+        }
+    }
+</script>
+</body>
+</html>

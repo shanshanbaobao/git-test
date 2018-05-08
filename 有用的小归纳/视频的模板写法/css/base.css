@@ -1,0 +1,50 @@
+@charset "gb2312";
+/* CSS Document */
+
+/*zero*/
+html{ font-size:62.5%;}
+body,div,menu,ol,ul,li,dl,dd,dt,h1,h2,h3,h4,h5,h6,input,p,form,header,nav,article,section,aside,video,audio,figure,textarea{ padding:0; margin:0;}
+input,select,textarea,img,area{ outline:none; border:none;}
+input,select,textarea{ background:#FFF;}
+mark{ background:none;}
+
+textarea{ resize:none;}
+menu,ul,ol,li{ list-style-type:none;}
+body{ font-family:"Î¢ÈíÑÅºÚ"; line-height:1; color:#666666}
+em,i,strong,b,small,h1,h2,h3,h4,h5,h6,address{ font-style:normal; font-weight:normal; font-size:100%;}
+span,b,em,i,strong,small,label,a,mark{ display:inline-block;}
+em,i,strong,b,small,span,li,a,mark{ transition:all 0.4s;}
+ul li{ transition:0s;}
+a{ text-decoration:none; outline:none; color:inherit;}
+/*clearFix*/
+.clearFix{ clear:both; *zoom:1;}
+.clearFix:after{ clear:both; display:block; visibility:hidden; height:0; line-height:0; content:""; font-size:0;}
+
+
+/*media*/
+@media (min-width:480px) and (max-width:639px){
+	/*html*/
+	html{ font-size:46.875%;}
+	/*container*/
+	#container{ width:100%;}
+}
+@media (min-width:400px) and (max-width:479px){
+	/*html*/
+	html{ font-size:39.0625%;}
+	/*container*/
+	#container{ width:100%;}	
+}
+@media (min-width:320px) and (max-width:399px){
+	/*html*/
+	html{ font-size:31.25%;}
+	/*container*/
+	#container{ width:100%;}	
+}
+
+
+
+
+
+
+
+

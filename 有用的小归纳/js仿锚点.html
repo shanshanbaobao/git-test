@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="js/jquery.js"></script>
+
+</head>
+<body>
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+    .had {
+        text-align: center;
+
+    }
+
+    .had ol {
+        display: flex;
+        position: absolute;
+        justify-content: center;
+        width: 100%;
+        /*top: 500px;*/
+        background: #fff;
+        overflow: hidden;
+    }
+
+    .had ol li {
+        background: tan;
+        padding: 10px;
+        margin-right: 10px;
+    }
+    .had ol li.on{
+        background: tomato;
+        color: #fff;
+    }
+
+    .box {
+        width: 100%;
+        height: 500px;
+        background: honeydew;
+        margin-bottom: 10px;
+    }
+    .box1 {
+        width: 100%;
+        height: 500px;
+        background: yellowgreen;
+        margin-bottom: 10px;
+    }
+
+    .zong {
+        margin-top: 41px;
+    }
+</style>
+<div class="box1">
+    66666666666
+</div>
+<div class="had">
+    <ol>
+        <li>one</li>
+        <li>two</li>
+        <li>three</li>
+        <li>four</li>
+        <li>five</li>
+    </ol>
+</div>
+<div class="zong">
+    <div class="box">
+        111111111
+    </div>
+    <div class="box">
+        22222222222222
+    </div>
+    <div class="box">
+        3333333333333
+    </div>
+    <div class="box">
+        4444444444444
+    </div>
+    <div class="box">
+        55555555555555
+    </div>
+    <div class="box">
+        66666666666
+    </div>
+</div>
+
+<script>
+
+    function point(oDom) {
+        var $oParent=$('.had ol');
+        var $oChild = $('.had ol li');
+        var $hadHeight=$oParent.height();
+
+        $oParent.css({'top':'500px'});//初始化导航条的位置，如果是移动端则获取前几个盒子的高度和;
+        $oChild.each(function (i,dom) {
+            $oChild.eq(i).click(function () {
+                var oIndex=$(this).index();
+
+                oDom.each(function (q) {
+                    //遍历出每个盒子到顶部的距离
+                    var $domOuterHeight = oDom.eq(oIndex).offset().top;
+                    //点击导航条时，根据索引让滚动条的滚动距离设置成对应的盒子到顶部的距离减去导航条的高度。
+                    $(window).scrollTop($domOuterHeight-$hadHeight);
+                })
+            })
+        });
+
+        $(window).scroll(function () {
+            //判断导航条的位置
+            if($(window).scrollTop()<500){
+                $oParent.css({'position':'absolute','top':'500px'});
+            }else {
+                $oParent.css({'position':'fixed','top':'0'});
+            }
+
+            oDom.each(function (w,dodo) {
+                var $domOuterHeight = oDom.eq(w).offset().top-$hadHeight;
+                if($(window).scrollTop()>=$domOuterHeight){
+                    $oChild.removeClass('on');
+                    $oChild.eq(w).addClass('on');
+                }
+                //下面的判断是可以实现懒加载
+                if($(window).scrollTop()>=$domOuterHeight-100){
+                    oDom.eq(w).css({'background':'black'});
+                }
+            });
+        })
+    }
+    point($('.box'));
+
+</script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/css.css">
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</head>
+<div class="gif">
+    <a href="55"><img src="images/csj_03.jpg" alt=""></a>
+    <a href="66"><img src="images/csj_04.jpg" alt=""></a>
+    <a href="77"><img src="images/csj_05.jpg" alt=""></a>
+    <a href="88"><img src="images/csj_06.jpg" alt=""></a>
+</div>
+<style>
+    .gif{position: relative;}
+    .gif a{position: absolute; left: 0; top: 0;}
+    .imgactive{z-index: 1;}
+</style>
+<script>
+    var oGif=document.querySelector('.gif'),
+            oA=oGif.getElementsByTagName('a');
+    var Num=0;
+    function go(){
+        Num++;
+        if(Num>oA.length-1){
+            Num=0;
+
+        }
+       for(var i=0; i<oA.length; i++){
+           oA[i].classList.remove('imgactive')
+       }
+        oA[Num].classList.add('imgactive');
+//        alert(Num)
+    }
+    setInterval(go,1000);
+
+
+</script>
+
+
+
+
+
+</body>
+</html>

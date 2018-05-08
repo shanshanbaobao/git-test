@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+  function Foo(firstName, lastName){
+    this.firstName = firstName;
+    this.lastName = lastName;
+  }
+  Foo.prototype.logName = function(){
+    //Foo.combineName();   会报错
+   // Foo.prototype.combineName();  //undefined undefined
+    this.combineName();   //这个才是正确输出
+    console.log(this.fullName);
+  };
+  Foo.prototype.combineName = function(){
+    this.fullName = `${this.firstName} ${this.lastName}`
+  }
+
+  var foo = new Foo('Sanfeng', 'Zhang');
+
+
+  //foo.__proto__ = Foo.prototype;
+  //foo.__proto__.__proto__ = Foo.prototype.__proto__ = Object.prototype;
+  //foo.__proto__.__proto__.__proto__ = Foo.prototype.__proto__.__proto__ = Object.prototype.__proto__ = null;
+  foo.logName();
+</script>
+</body>
+</html>

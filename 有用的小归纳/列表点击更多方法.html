@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+
+
+    <style>
+       .box{width: 300px;  height: 500px; margin-right: 10px; position: relative;}
+       .box ul li{line-height: 40px; background: #980c10; border: 1px solid #000000; margin-bottom: 5px; display: none;}
+       .box ul .active{display: block;}
+        .box input{position: absolute; left: 0;}
+        #click2{display: none;}
+    </style>
+</head>
+<body>
+<div class="box0">
+    <div class="box">
+        <ul>
+            <li>1111</li>
+            <li>222</li>
+            <li>333</li>
+            <li>444</li>
+            <li>555</li>
+            <li>666</li>
+            <li>7</li>
+            <!--<li>8</li>-->
+            <!--<li>9</li>-->
+            <!--<li>10</li>-->
+            <!--<li>11</li>-->
+        </ul>
+        <input type="button" value="click">
+        <input type="button" id="click2" value="click2">
+    </div>
+    <script>
+        function listShow(){
+            var oBox=document.querySelector('.box');
+            var oUl=oBox.getElementsByTagName('ul')[0];
+            var aLi=oUl.getElementsByTagName('li');
+            var oInput=document.querySelector('input');
+            var oInput2=document.getElementById('click2');
+            var firstNum=3;  //默认显示的数目
+            var showNum=2;   //点击一次显示的数目
+            var Nump=0;
+
+            //当实际的数目小于默认的数目
+            if(aLi.length<=firstNum){
+                for (var i=0; i<aLi.length; i++){
+                    aLi[i].style.display='block';
+                }
+                oInput.style.display='none';
+            }
+            else {
+                for (var i=0; i<firstNum; i++){
+                    aLi[i].style.display='block';
+                }
+            }
+
+
+
+            oInput.onclick=function(){
+                Nump++;
+                if(aLi.length>=firstNum+showNum){
+                    if((aLi.length-firstNum)%showNum==0){
+
+                        for(var d=0;d<firstNum+showNum*Nump;d++){
+                            aLi[d].style.display='block';
+                        }
+                    }
+
+                    else {
+                        for(var i=0;i<firstNum+showNum*Nump;i++){
+                            aLi[i].style.display='block';
+                            var yushu=Math.floor((aLi.length-firstNum)/showNum)
+                            //因为Nump是Nump++所以他是从1开始的，因此余数要加一
+                            if(Nump==yushu+1){
+                                for(var i=0;i<aLi.length;i++){
+                                    aLi[i].style.display='block';
+                                }
+                            }
+                        }
+                    }
+                }
+                else {
+                    for (var i=0; i<aLi.length; i++){
+                        aLi[i].style.display='block';
+                    }
+                }
+                //当最后一个li出现之后隐藏按钮
+                if(aLi[aLi.length-1].style.display=='block'){
+                    oInput.style.display='none';
+                }
+
+            }
+
+
+        }
+        listShow();//方法执行
+
+    </script>
+
+
+</div>
+</body>
+</html>
