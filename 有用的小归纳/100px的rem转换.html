@@ -4,19 +4,20 @@
     <meta charset="UTF-8">
     <title>less的应用</title>
     <script>
-    new function (){
-   var _self = this;
-   _self.width = 640;
-   _self.fontSize = 100;
-   _self.widthProportion = function(){
-       var p = (document.body&&document.body.clientWidth||document.getElementsByTagName("html")[0].offsetWidth)/_self.width;
-       return p>1?1:p<0.5?0.5:p;
-    };
-   _self.changePage = function(){
-       document.getElementsByTagName("html")[0].setAttribute("style","font-size:"+_self.widthProportion()*_self.fontSize+"px !important");
-   }
-   _self.changePage();
-   window.addEventListener('resize',function(){_self.changePage();},false);
+        (function (win,doc) {
+            var oFontSize=100;  //设置fontSize大小
+            var oWidth=640;    //设置设计稿的宽度
+            var oHtml=doc.getElementsByTagName('html')[0];
+            var oChangeSize=function () {
+                var oSize=oHtml.offsetWidth/oWidth;
+                return oSize>1?1:oSize<0.5?0.5:oSize;
+            };
+            var oLastSize=function () {
+                oHtml.style.fontSize=oChangeSize()*oFontSize+'px';
+            };
+            oLastSize();
+            win.addEventListener('resize',function () {oLastSize()},false)
+        })(window,document)
 };
 
 </script>
